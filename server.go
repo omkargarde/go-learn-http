@@ -61,13 +61,6 @@ func (p *PlayerServer) playerHandler(w http.ResponseWriter, r *http.Request) {
 
 // data function
 
-// TODO: delete if not needed
-func (p *PlayerServer) getLeagueTable() []Player {
-	return []Player{
-		{"Chris", 20},
-	}
-}
-
 func (p *PlayerServer) showScore(w http.ResponseWriter, playerName string) {
 	score := p.store.GetPlayerScore(playerName)
 	if score == 0 {
