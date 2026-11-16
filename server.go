@@ -15,6 +15,7 @@ type Player struct {
 type PlayerStore interface {
 	GetPlayerScore(name string) int
 	RecordWin(name string)
+	GetLeague() []Player
 }
 
 type PlayerServer struct {
@@ -37,15 +38,11 @@ func NewPlayerServer(store PlayerStore) *PlayerServer {
 	return p
 }
 
-func (p *PlayerServer) leagueHandler(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(p.getLeagueTable())
-	w.WriteHeader(http.StatusOK)
-}
+// handlers
 
-func (p *PlayerServer) getLeagueTable() []Player {
-	return []Player{
-		{"Chris", 20},
-	}
+func (p *PlayerServer) leagueHandler(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(p.store.GetLeague())
+	w.WriteHeader(http.StatusOK)
 }
 
 func (p *PlayerServer) playerHandler(w http.ResponseWriter, r *http.Request) {
@@ -57,6 +54,15 @@ func (p *PlayerServer) playerHandler(w http.ResponseWriter, r *http.Request) {
 		p.processWin(w, playerName)
 	case http.MethodGet:
 		p.showScore(w, playerName)
+	}
+}
+
+// data function
+
+// TODO: delete if not needed
+func (p *PlayerServer) getLeagueTable() []Player {
+	return []Player{
+		{"Chris", 20},
 	}
 }
 
