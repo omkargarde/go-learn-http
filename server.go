@@ -60,7 +60,6 @@ func (p *PlayerServer) playerHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // data function
-
 func (p *PlayerServer) showScore(w http.ResponseWriter, playerName string) {
 	score := p.store.GetPlayerScore(playerName)
 	if score == 0 {
